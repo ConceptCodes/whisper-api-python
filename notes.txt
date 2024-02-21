@@ -1,9 +1,0 @@
-the goal is to build a microservice to handle transcription of audio.
-we will use python for this
-users will upload an audio file and then we will add this to a queue
-every 15 mintutes we will find a new item in the queue and handle the transcription.
-for optimizations we can run multiple threads and have them process the audio on its own
-
-we will store the audio/video files in an S3 bucket
-we will manage our queue using postgres
-once files are transcribed we will delete the file and save the transcript and srt file to postgres
