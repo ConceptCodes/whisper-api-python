@@ -8,4 +8,7 @@ class ApiResponseModel(BaseModel):
   error_code: Optional[str] = None
   data: Any
 
+class HealthCheckResponse(BaseModel):
+  service: str
+  status: bool
     

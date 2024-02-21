@@ -4,3 +4,4 @@ starlette
 pydantic
 pydantic[email]
 sqlmodel
+psycopg2

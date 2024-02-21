@@ -1,6 +1,11 @@
 import os
 from dotenv import load_dotenv
 
+from core.constants import MAX_FILE_SIZE_IN_GB 
+from core.constants import MAX_FILES_FOR_USER
+from core.constants import MAX_THREADS
+from core.constants import ACCESS_TOKEN_EXPIRE_MINUTES
+
 load_dotenv()
 
 class Config:
@@ -12,9 +17,9 @@ class Config:
       return cls._instance
 
   def __init__(self):
-    self.MAX_FILES_FOR_USER = int(os.getenv("MAX_FILES_FOR_USER"))
-    self.MAX_FILE_SIZE_IN_GB = float(os.getenv("MAX_FILE_SIZE_IN_GB"))
-    self.MAX_THREADS = int(os.getenv("MAX_THREADS"))
+    self.MAX_FILES_FOR_USER = int(os.getenv("MAX_FILES_FOR_USER")) or MAX_FILES_FOR_USER
+    self.MAX_FILE_SIZE_IN_GB = float(os.getenv("MAX_FILE_SIZE_IN_GB")) or MAX_FILE_SIZE_IN_GB
+    self.MAX_THREADS = int(os.getenv("MAX_THREADS")) | MAX_THREADS
 
     self.PORT= int(os.getenv("PORT"))
 
@@ -25,6 +30,6 @@ class Config:
 
     self.SECRET_KEY = os.getenv("SECRET_KEY")
     self.ALGORITHM = os.getenv("ALGORITHM")
-    self.ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
+    self.ACCESS_TOKEN_EXPIRE_MINUTES = float(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")) or ACCESS_TOKEN_EXPIRE_MINUTES
 
 app_config = Config()
