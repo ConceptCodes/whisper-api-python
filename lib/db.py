@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 import psycopg2
-from config import app_config
+from core.config import app_config
 
 
 class Database:
@@ -20,4 +20,16 @@ class Database:
             password=app_config.DB_PASSWORD,
         )
 
-db = Database()
+    def __del__(self):
+        self.connection.close()
+
+    def health_check(self):
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("SELECT 1")
+            cursor.close()
+            return True
+        except Exception as e:
+            return False
+
+db = Database().connection

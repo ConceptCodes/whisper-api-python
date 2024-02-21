@@ -16,5 +16,5 @@ class Logger:
     ch = logging.StreamHandler()
     ch.setFormatter(formatter)
     self.logger.addHandler(ch)
-
+  
 log = Logger().logger
