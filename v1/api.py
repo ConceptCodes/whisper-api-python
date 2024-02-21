@@ -1,20 +1,19 @@
-from fastapi import FastAPI
+from fastapi import APIRouter
 from v1.endpoints import health
 
-class APIRouter:
+class Api:
   _instance = None
 
   def __new__(cls, *args, **kwargs):
       if not cls._instance:
-          cls._instance = super(APIRouter, cls).__new__(cls, *args, **kwargs)
+          cls._instance = super(Api, cls).__new__(cls, *args, **kwargs)
       return cls._instance
   
   def __init__(self):
-    self.api = FastAPI()
+    self.router = APIRouter()
 
     # Health check endpoint
-    self.api.include_router(health.router)
+    self.router.include_router(health.router)
 
-
-api = APIRouter().api
+api = Api()
         

@@ -17,4 +17,4 @@ class Logger:
     ch.setFormatter(formatter)
     self.logger.addHandler(ch)
   
-log = Logger().logger
+logger = Logger().logger
