@@ -104,3 +104,4 @@ dmypy.json
 *.sqlite3
 
 notes.txt
+.vscode
