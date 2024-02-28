@@ -16,9 +16,12 @@ class Database:
             f"postgresql://{app_config.DB_USER}:{app_config.DB_PASSWORD}@{app_config.DB_HOST}/{app_config.DB_NAME}"
         )
 
-    def get_session(self):
-        with Session(self.engine) as session:
-            yield session
+    def get_engine(self):
+        return self.engine
+    
+    def create_db_and_tables(self):
+      logger.debug("Creating database and tables")
+      SQLModel.metadata.create_all(self.engine)
 
     def health_check(self):
         try:

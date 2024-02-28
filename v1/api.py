@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from v1.endpoints import health
+from v1.endpoints import health, auth
 
 class Api:
   _instance = None
@@ -10,10 +10,13 @@ class Api:
       return cls._instance
   
   def __init__(self):
-    self.router = APIRouter()
+    self.router = APIRouter(prefix="/v1")
 
     # Health check endpoint
     self.router.include_router(health.router)
+
+    # Auth endpoints
+    self.router.include_router(auth.router)
 
 api = Api()
         
