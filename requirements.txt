@@ -8,3 +8,4 @@ psycopg2
 resend
 jinja2
 confluent_kafka
+openai-whisper

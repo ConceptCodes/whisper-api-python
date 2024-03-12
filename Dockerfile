@@ -2,9 +2,10 @@ FROM python:3.9-slim-buster
 
 WORKDIR /app
 
-ADD . /app
+COPY . /app
 
-RUN apt-get update && apt-get install -y gcc libpq-dev
+RUN apt-get update && apt-get install -y ffmpeg gcc libpq-dev && rm -rf /var/lib/apt/lists/*
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 80
