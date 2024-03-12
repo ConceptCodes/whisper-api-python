@@ -38,7 +38,4 @@ class Email:
 
       return email
 
-
-        
-        
-        
+email_client = Email()

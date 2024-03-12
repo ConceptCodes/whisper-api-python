@@ -24,6 +24,10 @@ class Config:
 
     self.RESEND_API_KEY = os.getenv("RESEND_API_KEY")
 
+    self.KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS")
+    self.KAFKA_GROUP_ID = os.getenv("KAFKA_GROUP_ID")
+    self.KAFKA_TOPIC = os.getenv("KAFKA_TOPIC")
+
     self.SECRET_KEY = os.getenv("SECRET_KEY")
     self.ALGORITHM = os.getenv("ALGORITHM")
     self.ACCESS_TOKEN_EXPIRE_MINUTES = float(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")) or ACCESS_TOKEN_EXPIRE_MINUTES
