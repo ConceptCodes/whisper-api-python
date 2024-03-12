@@ -20,7 +20,7 @@ class Email:
       env = Environment(loader=file_loader)
       template = env.get_template(template_path)
 
-      output = template.render(template)
+      output = template.render(template_params)
 
       return output
 
