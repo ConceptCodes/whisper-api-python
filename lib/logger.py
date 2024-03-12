@@ -1,5 +1,4 @@
 import logging
-import json
 
 class Logger:
   _instance = None

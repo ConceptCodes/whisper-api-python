@@ -33,11 +33,3 @@ class Uploads(SQLModel, table=True):
     fileId: str
     created: datetime.datetime = Field(default=datetime.datetime.utcnow)
     updated: datetime.datetime = Field(default=datetime.datetime.utcnow)
-
-class Queue(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    userId: Optional[int] = Field(default=None, index=True, foreign_key="users.id")
-    transcriptId: Optional[int] = Field(default=None, index=True, foreign_key="transcripts.id")
-    status: StatusEnum = Field(default="pending", index=True)
-    created: datetime.datetime = Field(default=datetime.datetime.utcnow)
-    updated: datetime.datetime = Field(default=datetime.datetime.utcnow)

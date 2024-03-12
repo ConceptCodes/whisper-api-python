@@ -5,12 +5,14 @@ from lib.db import db
 
 router = APIRouter()
 
-@router.get("/healthcheck", 
-            tags=["healthcheck"], 
-            summary="Health check for the service.", 
+
+@router.get("/healthcheck",
+            tags=["healthcheck"],
+            summary="Health check for the service.",
             description="Health check for the service.",
             )
 async def alive() -> ApiResponseModel:
-  data = list()
-  data.append(HealthCheckResponse(service="database", status=db.health_check()))
-  return send_success_response("Service is alive", data)    
+    data = list()
+    data.append(HealthCheckResponse(
+        service="database", status=db.health_check()))
+    return send_success_response("Service is alive", data)
