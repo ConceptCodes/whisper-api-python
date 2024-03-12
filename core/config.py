@@ -22,6 +22,8 @@ class Config:
     self.DB_PORT = os.getenv("DB_PORT")
     self.DB_PASSWORD = os.getenv("DB_PASSWORD")
 
+    self.RESEND_API_KEY = os.getenv("RESEND_API_KEY")
+
     self.SECRET_KEY = os.getenv("SECRET_KEY")
     self.ALGORITHM = os.getenv("ALGORITHM")
     self.ACCESS_TOKEN_EXPIRE_MINUTES = float(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")) or ACCESS_TOKEN_EXPIRE_MINUTES
