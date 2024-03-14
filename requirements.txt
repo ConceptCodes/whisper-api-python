@@ -9,3 +9,4 @@ resend
 jinja2
 confluent_kafka
 openai-whisper
+boto3

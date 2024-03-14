@@ -32,4 +32,8 @@ class Config:
     self.ALGORITHM = os.getenv("ALGORITHM")
     self.ACCESS_TOKEN_EXPIRE_MINUTES = float(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")) or ACCESS_TOKEN_EXPIRE_MINUTES
 
+    self.AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY")
+    self.AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
+    self.S3_BUCKET_NAME = os.getenv("S3_BUCKET_NAME")
+
 app_config = Config()
