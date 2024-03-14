@@ -2,8 +2,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This microservice is designed to handle audio transcription asynchronously using Apache Kafka for efficient message queuing and processing. Users can upload audio files, which are published to a Kafka topic. A separate consumer service continuously reads messages from the topic and performs the transcription, aiming for a 15-minute processing window.
 
+This microservice is designed to handle audio transcription. Users can upload audio files, which are stored in a S3 bucket, and an event is published to a Kafka topic. A separate consumer service continuously reads messages from the topic and performs the transcription using OpenAI Whisper, aiming for a ~15-minute processing window.
 
 ## Technologies
 - Audio Processing Library: [![FFmpeg](https://img.shields.io/badge/FFmpeg-0076B6?style=flat&logo=ffmpeg)](https://ffmpeg.org/)
