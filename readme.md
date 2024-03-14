@@ -7,7 +7,7 @@ This microservice is designed to handle audio transcription. Users can upload au
 
 ## Technologies
 - Audio Processing Library: [![FFmpeg](https://img.shields.io/badge/FFmpeg-0076B6?style=flat&logo=ffmpeg)](https://ffmpeg.org/)
-- Speech-to-text Library: [![OpenAI Whisper](https://img.shields.io/badge/OpenAI-Whisper-blue)](https://beta.openai.com/)
+- Speech-to-text Library: [![OpenAI Whisper](https://img.shields.io/badge/OpenAI-Whisper-blue)](https://github.com/openai/whisper?tab=readme-ov-file#whisper)
 - API Framework: [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat&logo=fastapi)](https://fastapi.tiangolo.com/)
 - Database: [![Postgres](https://img.shields.io/badge/Postgres-336791?style=flat&logo=postgresql)](https://www.postgresql.org/)
 - Messaging Queue: [![Apache Kafka](https://img.shields.io/badge/Apache%20Kafka-231F20?style=flat&logo=apachekafka)](https://kafka.apache.org/)
