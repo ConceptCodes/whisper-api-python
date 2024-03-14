@@ -1,7 +1,6 @@
-from confluent_kafka import Producer
+from confluent_kafka import Producer, Consumer
 from core.config import app_config
 from lib.logger import logger
-
 
 class Kafka:
     _instance = None
@@ -14,11 +13,28 @@ class Kafka:
     def __init__(self):
         self.producer = Producer(
             {'bootstrap.servers': app_config.KAFKA_BOOTSTRAP_SERVERS})
+        self.consumer = Consumer(
+            {'bootstrap.servers': app_config.KAFKA_BOOTSTRAP_SERVERS,
+             'group.id': app_config.KAFKA_GROUP_ID,
+             'auto.offset.reset': 'earliest'}
+        )
 
-    def send_message(self, topic, message):
-        logger.info(f"Sending message to {topic}: {message}")
-        self.producer.produce(topic, message)
-        self.producer.flush()
+    def health_check(self):
+        try:
+            logger.debug("Checking kafka connection")
+            self.producer.list_topics(timeout=5)
+            logger.debug("Kafka connection successful")
+            return True
+        except:
+            logger.error("Kafka connection failed")
+            return False
+        
+    def send_message(self, message):
+      logger.info(f"Sending message to {app_config.KAFKA_TOPIC}: {message}")
+      self.producer.produce(app_config.KAFKA_TOPIC, message)
+      self.producer.flush()
+      logger.info("Message sent")
+
 
 
 kafka_client = Kafka()

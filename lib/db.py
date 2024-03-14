@@ -31,4 +31,4 @@ class Database:
             logger.error("Database connection failed")
             return False
 
-db = Database()
+db_client = Database()

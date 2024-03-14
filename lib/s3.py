@@ -18,10 +18,19 @@ class S3:
     def upload_file(self, file_path, object_name=None):
         if object_name is None:
             object_name = file_path
-
         try:
             logger.info(f"Uploading file {file_path} to S3")
             self.s3.upload_file(file_path, app_config.S3_BUCKET_NAME, object_name)
+        except NoCredentialsError:
+            logger.error("No AWS credentials found")
+            return False
+
+        return True
+    
+    def download_file(self, file_id):
+        try:
+            logger.info(f"Downloading file_id {file_id} from S3")
+            self.s3.download_file(app_config.S3_BUCKET_NAME, file_id)
         except NoCredentialsError:
             logger.error("No AWS credentials found")
             return False

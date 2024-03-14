@@ -10,12 +10,11 @@ class StatusEnum(str, Enum):
 
 class Uploads(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    userId: Optional[int] = Field(
+    user_id: Optional[int] = Field(
         default=None, index=True, foreign_key="users.id")
-    transcriptId: Optional[int] = Field(
-        default=None, index=True, foreign_key="transcripts.id")
     filename: str
-    fileId: str
+    audio_file_id: Optional[str]
+    transcript_file_id: Optional[str]
     status: StatusEnum = Field(default="pending")
     created: datetime.datetime = Field(default=datetime.datetime.utcnow)
     updated: datetime.datetime = Field(default=datetime.datetime.utcnow)
