@@ -32,7 +32,7 @@ async def get_status(transcript_id: int) -> ApiResponseModel:
         if transcript:
             data = GetStatusResponse(
                 status=transcript.status, updated_at=transcript.updatedAt)
-            return send_success_response("Here is a message", data)
+            return send_success_response("Transcript Status retrieved successfully", data)
         else:
             return send_error_response("Transcript not found", 404)
     except Exception as e:
@@ -66,16 +66,17 @@ async def download(transcript_id: int) -> ApiResponseModel:
 async def create(req: TranscriptCreateRequest) -> ApiResponseModel:
     try:
         session = db_client.get_session()
-        audio_file_id = uuid.uuid4()
-        transcript = Uploads(audio_file_id=audio_file_id, status="pending",
-                             created=datetime.datetime.utcnow(),
-                             updated=datetime.datetime.utcnow(),
+        file_id = uuid.uuid4()
+        upload = Uploads(file_id=file_id, status="pending",
+                             created=datetime.datetime.now(datetime.UTC),
+                             updated=datetime.datetime.now(datetime.UTC),
                              )
-        session.add(transcript)
+        session.add(upload)
         session.commit()
+
+        s3_client.upload_file(req.file_path, file_id)
         kafka_client.send_message(app_config.KAFKA_TOPIC, {
-            "file_name": req.file_name,
-            "audio_file_id": audio_file_id,
+            "file_id": file_id,
         })
         return send_success_response("Transcript created successfully")
     except Exception as e:

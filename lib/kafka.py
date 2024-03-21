@@ -35,6 +35,28 @@ class Kafka:
       self.producer.flush()
       logger.info("Message sent")
 
+    def start_consumer(self, on_message):
+        self.consumer.subscribe([app_config.KAFKA_TOPIC])
+
+        try:
+            while True:
+                msg = self.consumer.poll(1.0)
+
+                if msg is None:
+                    continue
+                if msg.error():
+                    logger.error(f"Consumer error: {msg.error()}")
+                    continue
+
+                message = msg.value().decode('utf-8')
+                on_message(message)
+
+        except KeyboardInterrupt:
+            pass
+
+        finally:
+            self.consumer.close()
+
 
 
 kafka_client = Kafka()

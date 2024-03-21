@@ -1,4 +1,4 @@
-from core.models.response import ApiResponseModel
+from core.schemas.response import ApiResponseModel
 
 def send_success_response(msg: str, data: dict = None):
     return ApiResponseModel(status=True, message=msg, data=data, error_code=None)

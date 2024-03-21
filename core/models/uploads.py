@@ -13,8 +13,7 @@ class Uploads(SQLModel, table=True):
     user_id: Optional[int] = Field(
         default=None, index=True, foreign_key="users.id")
     filename: str
-    audio_file_id: Optional[str]
-    transcript_file_id: Optional[str]
+    file_id: Optional[str]
     status: StatusEnum = Field(default="pending")
     created: datetime.datetime = Field(default=datetime.datetime.utcnow)
     updated: datetime.datetime = Field(default=datetime.datetime.utcnow)

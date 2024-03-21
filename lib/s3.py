@@ -1,5 +1,5 @@
 import boto3
-from botocore.exceptions import NoCredentialsError
+from botocore.exceptions import ClientError
 from core.config import app_config
 from lib.logger import logger
 
@@ -21,7 +21,7 @@ class S3:
         try:
             logger.info(f"Uploading file {file_path} to S3")
             self.s3.upload_file(file_path, app_config.S3_BUCKET_NAME, object_name)
-        except NoCredentialsError:
+        except ClientError:
             logger.error("No AWS credentials found")
             return False
 
@@ -31,7 +31,7 @@ class S3:
         try:
             logger.info(f"Downloading file_id {file_id} from S3")
             self.s3.download_file(app_config.S3_BUCKET_NAME, file_id)
-        except NoCredentialsError:
+        except ClientError:
             logger.error("No AWS credentials found")
             return False
 

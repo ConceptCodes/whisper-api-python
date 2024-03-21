@@ -1,5 +1,6 @@
 from fastapi import APIRouter
-from core.schemas.response import ApiResponseModel, HealthCheckResponse
+from core.schemas.response import ApiResponseModel
+from core.schemas.health import HealthCheckResponse
 from core.util.response import send_success_response
 from lib.db import db_client
 

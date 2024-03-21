@@ -1,5 +1,8 @@
 from fastapi import APIRouter
 from v1.endpoints import health
+from v1.endpoints import transcript
+from lib.kafka import kafka_client
+import consumer
 
 class Api:
   _instance = None
@@ -14,6 +17,13 @@ class Api:
 
     # Health check endpoint
     self.router.include_router(health.router)
+
+    # Transcript endpoints
+    self.router.include_router(transcript.router)
+
+    # start consumer
+    kafka_client.start_consumer(consumer.on_message)
+
 
 api = Api()
         
