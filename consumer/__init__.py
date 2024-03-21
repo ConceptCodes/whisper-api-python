@@ -3,6 +3,7 @@ from lib.kafka import kafka_client
 from lib.s3 import s3_client
 from lib.db import db_client
 from lib.logger import logger
+from core.config import app_config
 from sqlmodel import select
 import whisper
 import json
@@ -13,13 +14,13 @@ def on_message(message):
     logger.info(f"Received message: {message}")
     data = json.loads(message)
 
-    file_id = data["audio_file_id"]
+    file_id = data["file_id"]
 
     if not file_id:
         logger.error("Audio file id is missing")
         return
 
-    s3_client.download_file(file_id)
+    s3_client.download_file(file_id, "mp3")
 
     session = db_client.get_session()
     
@@ -36,13 +37,16 @@ def on_message(message):
     session.update(upload)
     session.commit()
 
-    model = whisper.load_model("base")
-    result = model.transcribe(f"{file_id}.mp3")
+    file_path_mp3 = os.path.join(app_config.ASSET_DIR, f"{file_id}.mp3")
+    file_path_txt = os.path.join(app_config.ASSET_DIR, f"{file_id}.txt")
 
-    with open(f"{file_id}.txt", "w") as file:
+    model = whisper.load_model("base")
+    result = model.transcribe(file_path_mp3)
+
+    with open(file_path_txt, "w") as file:
         file.write(result)
 
-    s3_client.upload_file(f"{file_id}.txt")
+    s3_client.upload_file(file_path_txt, f"{file_id}_txt")
 
     upload.status = "completed"
     session.update(upload)

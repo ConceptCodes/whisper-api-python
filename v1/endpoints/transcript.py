@@ -1,4 +1,5 @@
 import uuid
+import os
 import datetime
 from sqlmodel import select
 from fastapi import APIRouter
@@ -44,14 +45,16 @@ async def get_status(transcript_id: int) -> ApiResponseModel:
             summary="download a transcript by id",
             description="download a transcript by id",
             )
+# TODO: modify to return the file
 async def download(transcript_id: int) -> ApiResponseModel:
     try:
         session = db_client.get_session()
         statement = select(Uploads).where(Uploads.id == transcript_id)
         transcript = session.exec(statement)
         if transcript:
-            file = s3_client.download_file(transcript.transcript_file_id)
-            return send_success_response(file)
+            s3_client.download_file(transcript.file_id)
+            file = os.path.join(app_config.ASSET_DIR, f"{transcript.file_id}.txt")
+            return file
         else:
             return send_error_response("Transcript not found", 404)
     except Exception as e:
@@ -74,7 +77,7 @@ async def create(req: TranscriptCreateRequest) -> ApiResponseModel:
         session.add(upload)
         session.commit()
 
-        s3_client.upload_file(req.file_path, file_id)
+        s3_client.upload_file(req.file_path, f"{file_id}_mp3")
         kafka_client.send_message(app_config.KAFKA_TOPIC, {
             "file_id": file_id,
         })

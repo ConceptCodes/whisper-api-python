@@ -1,3 +1,4 @@
+import os
 import boto3
 from botocore.exceptions import ClientError
 from core.config import app_config
@@ -27,10 +28,12 @@ class S3:
 
         return True
     
-    def download_file(self, file_id):
+    def download_file(self, file_id, extension="txt"):
         try:
             logger.info(f"Downloading file_id {file_id} from S3")
-            self.s3.download_file(app_config.S3_BUCKET_NAME, file_id)
+            file_path = os.path.join(app_config.ASSET_DIR, f"{file_id}.{extension}")
+            with open(file_path, "wb") as file:
+              self.s3.download_fileobj(app_config.S3_BUCKET_NAME, file_id, file)
         except ClientError:
             logger.error("No AWS credentials found")
             return False

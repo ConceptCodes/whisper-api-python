@@ -36,4 +36,7 @@ class Config:
     self.AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
     self.S3_BUCKET_NAME = os.getenv("S3_BUCKET_NAME")
 
+    self.ASSET_DIR = os.getenv("ASSET_DIR")
+
+
 app_config = Config()
